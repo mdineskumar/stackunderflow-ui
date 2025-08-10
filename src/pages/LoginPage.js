@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
-
+import { useAuth } from '../context/AuthContext';
 const LoginPage = () => {
   // State for the form inputs
   const [username, setUsername] = useState('');
@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   // Hook to programmatically navigate the user
   const navigate = useNavigate();
-
+  const { login } = useAuth(); // Get the login function from the context
   const handleLogin = async (e) => {
     // Prevent the default form submission which reloads the page
     e.preventDefault();
@@ -26,8 +26,8 @@ const LoginPage = () => {
       // Assuming the API returns a token in response.data.accessToken
       if (response.data && response.data.accessToken) {
         // **IMPORTANT**: Store the token in localStorage
-        localStorage.setItem('token', response.data.accessToken);
-
+        //localStorage.setItem('token', response.data.accessToken);
+        login(response.data.accessToken);
         // For now, just log it to confirm and navigate to the homepage
         console.log('Login successful, token saved.');
         alert('Login successful!');

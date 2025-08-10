@@ -11,13 +11,28 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
-/*
-  =================================================================================
-  IMPORTANT:
-  Later, we will add logic here (an "interceptor") to automatically attach
-  the JWT authentication token to every outgoing request.
-  For now, this is all we need.
-  =================================================================================
-*/
+
+// =======================================================
+// THIS IS THE NEW, IMPORTANT PART
+// =======================================================
+// Axios Request Interceptor
+api.interceptors.request.use(
+  (config) => {
+    // Get the token from localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If the token exists, add it to the Authorization header
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    // Handle request errors
+    return Promise.reject(error);
+  }
+);
+// =======================================================
+
+
 
 export default api;
