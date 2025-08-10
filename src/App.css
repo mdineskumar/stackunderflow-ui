@@ -1,0 +1,159 @@
+/* src/App.css */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  max-width: 1100px; /* Set a max width for the content area */
+  width: 100%;
+  margin: 0 auto; /* Center the content horizontally */
+  padding: 1rem 1.5rem; /* Add some padding on the sides and top/bottom */
+  flex-grow: 1;
+}
+
+/* --- Navbar Styles --- */
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #d6d9dc;
+  padding: 0 1.5rem; /* Match side padding of main-content */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Pushes items to the ends */
+  height: 50px;
+}
+
+.navbar-left, .navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Adds space between items */
+}
+
+.navbar a {
+  color: #525960;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: background-color 0.2s;
+}
+
+.navbar a:hover {
+  background-color: #e3e6e8;
+}
+
+.navbar .so-logo {
+  font-weight: bold;
+  color: #000000;
+}
+
+.navbar .so-logo:hover {
+  background-color: transparent; /* Don't highlight the logo on hover */
+}
+
+/* Style the button to match Stack Overflow */
+.navbar button, .button-primary {
+  background-color: #0A95FF;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.navbar button:hover, .button-primary:hover {
+  background-color: #0077CC;
+}
+
+
+/* --- Form Styles --- */
+.form-container {
+  background-color: #ffffff;
+  padding: 24px;
+  border: 1px solid #d6d9dc;
+  border-radius: 5px;
+  max-width: 500px;
+  margin: 2rem auto;
+}
+
+.form-container h2 {
+  font-size: 21px;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #babfc4;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  outline: none;
+  border-color: #6cbbf7;
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
+}
+
+.form-error {
+  color: #d0393e;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+/* --- Question List Styles --- */
+.question-card {
+  background-color: #ffffff;
+  padding: 16px;
+  border: 1px solid #d6d9dc;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.question-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.question-card h3 a {
+  text-decoration: none;
+  color: #0077CC;
+}
+
+.question-card h3 a:hover {
+  color: #0A95FF;
+}
+
+.question-card p {
+  margin: 0;
+  font-size: 13px;
+  color: #6a737c;
+}
+
+/* --- Question Detail Styles --- */
+.question-detail-body {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.answer-card {
+  padding: 16px;
+  border-top: 1px solid #d6d9dc;
+  margin-top: 1rem;
+}

@@ -27,6 +27,9 @@ const AnswerForm = ({ questionId, onAnswerPosted }) => {
   };
 
   return (
+    <div className="form-group">
+
+  
     <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
       <h4>Your Answer</h4>
       <textarea
@@ -37,8 +40,9 @@ const AnswerForm = ({ questionId, onAnswerPosted }) => {
       ></textarea>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <br />
-      <button type="submit">Post Your Answer</button>
+      <button type="submit" className="button-primary">Post Your Answer</button>
     </form>
+      </div>
   );
 };
 

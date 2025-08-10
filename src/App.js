@@ -21,19 +21,25 @@ const Navigation = () => {
     };
 
     return (
-        <nav style={{ padding: '1rem', backgroundColor: '#f0f0f0', marginBottom: '1rem' }}>
-          <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
-          {isLoggedIn && <Link to="/ask" style={{ marginRight: '1rem' }}>Ask Question</Link>}
-          {isLoggedIn ? (
+        <header className="navbar">
+      <div className="navbar-left">
+        <Link to="/" className="so-logo">Stack Underflow</Link>
+        <Link to="/">Questions</Link>
+      </div>
+      <div className="navbar-right">
+        {isLoggedIn ? (
+          <>
+            <Link to="/ask">Ask Question</Link>
             <button onClick={handleLogout}>Logout</button>
-          ) : (
-            <>
-          {/* 2. Add Register link */}
-          <Link to="/login" style={{ marginRight: '1rem' }}>Login</Link>
-          <Link to="/register">Register</Link>
-        </>
-          )}
-        </nav>
+          </>
+        ) : (
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register" className="button-primary" style={{color: 'white'}}>Sign up</Link>
+          </>
+        )}
+      </div>
+    </header>
     );
 }
 
@@ -42,10 +48,10 @@ function App() {
   
   return (
      <Router>
-      <div className="App">
+      <div className="app-container">
         <Navigation />
 
-        <main>
+          <div className="main-content">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -61,7 +67,7 @@ function App() {
             />
              <Route path="/questions/:id" element={<QuestionDetailPage />} />
           </Routes>
-        </main>
+        </div>
       </div>
     </Router>
   );

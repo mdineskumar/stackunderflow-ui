@@ -49,15 +49,15 @@ if (!question) return <div>Question not found.</div>;
     <div>
       <h1>{question.title}</h1>
       <p>Asked by: {question.authorUsername} on {new Date(question.createdAt).toLocaleString()}</p>
-      <p>{question.body}</p>
+      <div className="question-detail-body">{question.body}</div>
 
       <hr />
 
       <h3>Answers ({question.answers.length})</h3>
       {question.answers.length > 0 ? (
         question.answers.map((answer) => (
-          <div key={answer.id} style={{ border: '1px solid #eee', padding: '10px', margin: '10px 0' }}>
-            <p>{answer.body}</p>
+          <div key={answer.id} className="answer-card">
+            <p className="question-detail-body">{answer.body}</p>
             <p>Answered by: {answer.authorUsername} on {new Date(answer.createdAt).toLocaleString()}</p>
           </div>
         ))

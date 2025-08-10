@@ -42,7 +42,7 @@ const HomePage = () => {
       <div className="question-list">
         {questions.length > 0 ? (
           questions.map((question) => (
-            <div key={question.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
+            <div key={question.id} className="question-card">
               {/* Wrap the title in a Link component */}
               <h3 style={{ margin: '0 0 5px 0' }}>
                 <Link to={`/questions/${question.id}`}>{question.title}</Link>

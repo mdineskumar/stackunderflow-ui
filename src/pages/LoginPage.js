@@ -43,10 +43,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
-        <div style={{ margin: '10px 0' }}>
+        <div className="form-group">
           <label htmlFor="username">Username: </label>
           <input
             type="text"
@@ -56,7 +56,7 @@ const LoginPage = () => {
             required
           />
         </div>
-        <div style={{ margin: '10px 0' }}>
+        <div className="form-group">
           <label htmlFor="password">Password: </label>
           <input
             type="password"
@@ -67,8 +67,8 @@ const LoginPage = () => {
           />
         </div>
         {/* Display error message if it exists */}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Login</button>
+        {error && <p className="form-error">{error}</p>}
+        <button type="submit" className="button-primary">Login</button>
       </form>
     </div>
   );

@@ -35,10 +35,10 @@ const AskQuestionPage = () => {
   };
 
   return (
-    <div>
+    <div className="form-container">
       <h2>Ask a Public Question</h2>
       <form onSubmit={handleAskQuestion}>
-        <div style={{ margin: '10px 0' }}>
+        <div className="form-group">
           <label htmlFor="title">Title</label>
           <br />
           <input
@@ -50,7 +50,7 @@ const AskQuestionPage = () => {
             style={{ width: '80%' }}
           />
         </div>
-        <div style={{ margin: '10px 0' }}>
+        <div className="form-group">
           <label htmlFor="body">Body</label>
           <br />
           <textarea
@@ -61,8 +61,8 @@ const AskQuestionPage = () => {
             style={{ width: '80%' }}
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Post Your Question</button>
+        {error && <p className="form-error">{error}</p>}
+        <button type="submit" className="button-primary">Post Your Question</button>
       </form>
     </div>
   );
