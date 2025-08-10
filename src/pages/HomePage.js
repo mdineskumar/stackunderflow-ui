@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import api from '../services/api';
+import { Link } from 'react-router-dom';
 const HomePage = () => {
     //state to store list of questions, 
     const [questions, setQuestions] = useState([]);
@@ -42,9 +43,11 @@ const HomePage = () => {
         {questions.length > 0 ? (
           questions.map((question) => (
             <div key={question.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
-              <h3>{question.title}</h3>
-              <p>Asked by: {question.authorUsername}</p>
-              {/* We will make this a link in a later step */}
+              {/* Wrap the title in a Link component */}
+              <h3 style={{ margin: '0 0 5px 0' }}>
+                <Link to={`/questions/${question.id}`}>{question.title}</Link>
+              </h3>
+              <p style={{ margin: '0' }}>Asked by: {question.authorUsername}</p>
             </div>
           ))
         ) : (

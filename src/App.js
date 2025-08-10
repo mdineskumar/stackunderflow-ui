@@ -7,6 +7,7 @@ import { useAuth } from './context/AuthContext'; // Import the hook
 import { useNavigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import AskQuestionPage from './pages/AskQuestionPage';
+import QuestionDetailPage from './pages/QuestionDetailPage';
 // Create a new component for the navigation logic
 const Navigation = () => {
     const { isLoggedIn, logout } = useAuth();
@@ -51,6 +52,7 @@ function App() {
                 </ProtectedRoute>
               } 
             />
+             <Route path="/questions/:id" element={<QuestionDetailPage />} />
           </Routes>
         </main>
       </div>
