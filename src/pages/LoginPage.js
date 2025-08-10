@@ -11,11 +11,16 @@ const LoginPage = () => {
   // Hook to programmatically navigate the user
   const navigate = useNavigate();
   const { login } = useAuth(); // Get the login function from the context
+
+  const [success, setSuccess] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleLogin = async (e) => {
     // Prevent the default form submission which reloads the page
     e.preventDefault();
     setError(''); // Clear previous errors
-
+    setSuccess('');
+    setIsSubmitting(true);
     try {
       // Make the POST request to the login endpoint
       const response = await api.post('/auth/login', {
@@ -25,20 +30,19 @@ const LoginPage = () => {
 
       // Assuming the API returns a token in response.data.accessToken
       if (response.data && response.data.accessToken) {
-        // **IMPORTANT**: Store the token in localStorage
-        //localStorage.setItem('token', response.data.accessToken);
-        login(response.data.accessToken);
-        // For now, just log it to confirm and navigate to the homepage
-        console.log('Login successful, token saved.');
-        alert('Login successful!');
-        
-        // Redirect user to the homepage after successful login
-        navigate('/');
+        setSuccess('Login successful! Redirecting...'); // <-- 4. Set success message instead of alert
+
+        // Use a timeout to give the user time to read the message before redirecting
+        setTimeout(() => {
+          login(response.data.accessToken);
+          navigate('/');
+        }, 1500); // 1.5 second delay
       }
     } catch (err) {
       // If the server responds with an error (e.g., 401 Unauthorized)
       console.error('Login failed:', err);
       setError('Invalid username or password. Please try again.');
+      setIsSubmitting(false);
     }
   };
 
@@ -68,7 +72,10 @@ const LoginPage = () => {
         </div>
         {/* Display error message if it exists */}
         {error && <p className="form-error">{error}</p>}
-        <button type="submit" className="button-primary">Login</button>
+        {success && <p style={{ color: 'green' }}>{success}</p>}
+        <button type="submit" className="button-primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Logging in...' : 'Login'}
+            </button>
       </form>
     </div>
   );
