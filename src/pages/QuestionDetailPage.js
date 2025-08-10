@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'; // Hook to get URL parameters
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
+import AnswerForm from '../components/AnswerForm';
 // We'll reuse the AnswerResponse structure implicitly, or create a dedicated AnswerDisplay component later.
 
 const QuestionDetailPage = () => {
@@ -11,10 +13,9 @@ const QuestionDetailPage = () => {
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { isLoggedIn } = useAuth(); // <-- 3. Get login status
   // Fetch the question details when the component mounts or the ID changes
-  useEffect(() => {
-    const fetchQuestionDetails = async () => {
+  const fetchQuestionDetails = async () => {
       setLoading(true); // Start loading
       setError(null);   // Clear previous errors
 
@@ -30,7 +31,7 @@ const QuestionDetailPage = () => {
         setLoading(false); // Stop loading
       }
     };
-
+  useEffect(() => {
     fetchQuestionDetails();
   }, [id]); // Re-run the effect if the ID in the URL changes
 
@@ -42,7 +43,7 @@ const QuestionDetailPage = () => {
   if (error) {
     return <div>Error: {error}</div>;
   }
-
+if (!question) return <div>Question not found.</div>;
   // Render the question and its answers
   return (
     <div>
@@ -62,6 +63,12 @@ const QuestionDetailPage = () => {
         ))
       ) : (
         <p>No answers yet.</p>
+      )}
+      {/* 4. Conditionally render the AnswerForm */}
+      {isLoggedIn ? (
+        <AnswerForm questionId={id} onAnswerPosted={fetchQuestionDetails} />
+      ) : (
+        <p>Please log in to post an answer.</p>
       )}
     </div>
   );
