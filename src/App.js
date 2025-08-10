@@ -5,7 +5,8 @@ import LoginPage from './pages/LoginPage';
 import './App.css';
 import { useAuth } from './context/AuthContext'; // Import the hook
 import { useNavigate } from 'react-router-dom';
-
+import ProtectedRoute from './components/ProtectedRoute';
+import AskQuestionPage from './pages/AskQuestionPage';
 // Create a new component for the navigation logic
 const Navigation = () => {
     const { isLoggedIn, logout } = useAuth();
@@ -19,6 +20,7 @@ const Navigation = () => {
     return (
         <nav style={{ padding: '1rem', backgroundColor: '#f0f0f0', marginBottom: '1rem' }}>
           <Link to="/" style={{ marginRight: '1rem' }}>Home</Link>
+          {isLoggedIn && <Link to="/ask" style={{ marginRight: '1rem' }}>Ask Question</Link>}
           {isLoggedIn ? (
             <button onClick={handleLogout}>Logout</button>
           ) : (
@@ -40,6 +42,15 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+            {/* 4. Add the new protected route */}
+            <Route 
+              path="/ask" 
+              element={
+                <ProtectedRoute>
+                  <AskQuestionPage />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </main>
       </div>
