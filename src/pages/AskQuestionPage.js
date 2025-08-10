@@ -7,10 +7,14 @@ const AskQuestionPage = () => {
   const [body, setBody] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(''); // <-- 1. Add state for success message
+  const [isSubmitting, setIsSubmitting] = useState(false); // <-- 2. Add state for submission status
 
   const handleAskQuestion = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
+    setIsSubmitting(true); // <-- 3. Set submitting to true
 
     if (!title || !body) {
       setError('Title and body are required.');
@@ -24,13 +28,18 @@ const AskQuestionPage = () => {
         body: body,
       });
 
-      alert('Question posted successfully!');
-      // Redirect to the homepage to see the new question
+      setSuccess('Question posted successfully!');
+      // Use a timeout to give the user time to read the message before redirecting
+        setTimeout(() => {
+           // Redirect to the homepage to see the new question
       navigate('/');
+        }, 1500); // 1.5 second delay
+     
 
     } catch (err) {
       console.error('Failed to post question:', err);
       setError('Failed to post question. You may need to log in again.');
+        setIsSubmitting(false);
     }
   };
 
@@ -62,7 +71,10 @@ const AskQuestionPage = () => {
           />
         </div>
         {error && <p className="form-error">{error}</p>}
-        <button type="submit" className="button-primary">Post Your Question</button>
+        {success && <p style={{ color: 'green' }}>{success}</p>}
+        <button type="submit" className="button-primary" disabled={isSubmitting}>
+          {isSubmitting ? 'Posting Question...' : 'Post Your Question'}
+            </button>
       </form>
     </div>
   );

@@ -8,10 +8,14 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(''); // <-- 1. Add state for success message
+  const [isSubmitting, setIsSubmitting] = useState(false); // <-- 2. Add state for submission status
 
   const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
+    setIsSubmitting(true); // <-- 3. Set submitting to true
 
     if (!username || !email || !password) {
         setError('All fields are required.');
@@ -25,8 +29,12 @@ const RegisterPage = () => {
         password,
       });
 
-      alert('Registration successful! Please log in.');
-      navigate('/login'); // Redirect to login page after successful registration
+      setSuccess('Registration successful! Please log in.');
+      // Use a timeout to give the user time to read the message before redirecting
+        setTimeout(() => {
+            navigate('/login'); // Redirect to login page after successful registration
+        }, 1500); // 1.5 second delay
+      
 
     } catch (err) {
       console.error('Registration failed:', err);
@@ -36,6 +44,7 @@ const RegisterPage = () => {
       } else {
         setError('Registration failed. Please try again.');
       }
+      setIsSubmitting(false); // <-- 5. Re-enable the form on failure
     }
   };
 
@@ -75,7 +84,10 @@ const RegisterPage = () => {
           />
         </div>
         {error && <p className="form-error">{error}</p>}
-        <button type="submit" className="button-primary">Register</button>
+        {success && <p style={{ color: 'green' }}>{success}</p>}
+        <button type="submit" className="button-primary" disabled={isSubmitting}>
+            {isSubmitting ? 'Registering...' : 'Register'}
+            </button>
       </form>
     </div>
   );
