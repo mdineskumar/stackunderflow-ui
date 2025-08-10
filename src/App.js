@@ -9,7 +9,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AskQuestionPage from './pages/AskQuestionPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
 import RegisterPage from './pages/RegisterPage';
-
+import ProjectDetailsPage from './pages/ProjectDetailsPage';
 // Create a new component for the navigation logic
 const Navigation = () => {
     const { isLoggedIn, logout } = useAuth();
@@ -25,6 +25,7 @@ const Navigation = () => {
       <div className="navbar-left">
         <Link to="/" className="so-logo">Stack Underflow</Link>
         <Link to="/">Questions</Link>
+        <Link to="/about">About</Link>
       </div>
       <div className="navbar-right">
         {isLoggedIn ? (
@@ -56,6 +57,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
              <Route path="/register" element={<RegisterPage />} />
+             <Route path="/about" element={<ProjectDetailsPage />} /> 
             {/* 4. Add the new protected route */}
             <Route 
               path="/ask" 
