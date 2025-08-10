@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import AskQuestionPage from './pages/AskQuestionPage';
 import QuestionDetailPage from './pages/QuestionDetailPage';
+import RegisterPage from './pages/RegisterPage';
+
 // Create a new component for the navigation logic
 const Navigation = () => {
     const { isLoggedIn, logout } = useAuth();
@@ -25,7 +27,11 @@ const Navigation = () => {
           {isLoggedIn ? (
             <button onClick={handleLogout}>Logout</button>
           ) : (
-            <Link to="/login">Login</Link>
+            <>
+          {/* 2. Add Register link */}
+          <Link to="/login" style={{ marginRight: '1rem' }}>Login</Link>
+          <Link to="/register">Register</Link>
+        </>
           )}
         </nav>
     );
@@ -43,6 +49,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
+             <Route path="/register" element={<RegisterPage />} />
             {/* 4. Add the new protected route */}
             <Route 
               path="/ask" 
