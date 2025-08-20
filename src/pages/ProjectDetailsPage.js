@@ -61,12 +61,9 @@ const ProjectDetailsPage = () => {
 
       <h2 style={sectionTitleStyle}>Deployment & Hosting</h2>
       <ul>
-        <li><strong>Backend API:</strong> Runs on <strong>AWS Elastic Beanstalk</strong>, which manages the underlying infrastructure and allows for auto-scaling.</li>
-        {/* <li><strong>Backend API:</strong> Containerized with <strong>Docker</strong> and deployed on <strong>Render</strong>.</li> */}
-        {/* <li><strong>Database:</strong> Managed <strong>PostgreSQL</strong> instance on <strong>Render</strong>.</li> */}
-        <li><strong>Database:</strong> A managed <strong>PostgreSQL</strong> instance on <strong>Amazon RDS</strong> ensures high availability, backups, and data security.</li>
-        {/* <li><strong>Frontend:</strong> Deployed as a static site on <strong>Vercel / Netlify</strong> (once completed).</li> */}
-         <li><strong>Deployment:</strong> Hosted on <strong>AWS Amplify</strong> for fast, global, and secure content delivery with integrated CI/CD.</li>
+       <li><strong>Backend API:</strong> Containerized with <strong>Docker</strong> and deployed on <strong>Render</strong>.</li>
+        <li><strong>Database:</strong> Managed <strong>PostgreSQL</strong> instance on <strong>Render</strong>.</li>
+        <li><strong>Frontend:</strong> Deployed as a static site on <strong>Vercel / Netlify</strong> (once completed).</li>
       </ul>
 
       <h2 style={sectionTitleStyle}>Future Updates & Enhancements</h2>
