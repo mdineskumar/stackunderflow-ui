@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // Hook to get URL parameters
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import AnswerForm from '../components/AnswerForm';
+import Vote from '../components/Vote';
 // We'll reuse the AnswerResponse structure implicitly, or create a dedicated AnswerDisplay component later.
 
 const QuestionDetailPage = () => {
@@ -47,29 +48,51 @@ if (!question) return <div>Question not found.</div>;
   // Render the question and its answers
   return (
     <div>
-      <h1>{question.title}</h1>
-      <p>Asked by: {question.authorUsername} on {new Date(question.createdAt).toLocaleString()}</p>
-      <div className="question-detail-body">{question.body}</div>
+      {/* --- QUESTION SECTION --- */}
+        {/* The title and metadata are now outside the flex container */}
+        <h1>{question.title}</h1>
+        <p style={{color: '#6a737c', fontSize: '13px'}}>
+            Asked by: {question.authorUsername} on {new Date(question.createdAt).toLocaleString()}
+        </p>
+        <hr />
 
-      <hr />
+        {/* This new flex container aligns the vote component with the question body */}
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+            <Vote post={question} postType="question" onVoteSuccess={fetchQuestionDetails} />
+            <div className="question-detail-body" style={{ flex: 1 }}>
+                {question.body}
+            </div>
+        </div>
 
-      <h3>Answers ({question.answers.length})</h3>
-      {question.answers.length > 0 ? (
-        question.answers.map((answer) => (
-          <div key={answer.id} className="answer-card">
-            <p className="question-detail-body">{answer.body}</p>
-            <p>Answered by: {answer.authorUsername} on {new Date(answer.createdAt).toLocaleString()}</p>
-          </div>
-        ))
-      ) : (
-        <p>No answers yet.</p>
-      )}
-      {/* 4. Conditionally render the AnswerForm */}
-      {isLoggedIn ? (
-        <AnswerForm questionId={id} onAnswerPosted={fetchQuestionDetails} />
-      ) : (
-        <p>Please log in to post an answer.</p>
-      )}
+        {/* --- ANSWERS SECTION --- */}
+        <h3 style={{marginTop: '40px'}}>Answers ({question.answers.length})</h3>
+        
+        {question.answers.length > 0 ? (
+            question.answers.map((answer) => (
+                // We apply the same pattern to each answer
+                <div key={answer.id} style={{ borderTop: '1px solid #d6d9dc', paddingTop: '16px', marginTop: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                        <Vote post={answer} postType="answer" onVoteSuccess={fetchQuestionDetails} />
+                        <div className="question-detail-body" style={{ flex: 1 }}>
+                            {answer.body}
+                        </div>
+                    </div>
+                    <p style={{textAlign: 'right', color: '#6a737c', fontSize: '13px', marginTop: '10px'}}>
+                        Answered by: {answer.authorUsername} on {new Date(answer.createdAt).toLocaleString()}
+                    </p>
+                </div>
+            ))
+        ) : (
+            <p>No answers yet.</p>
+        )}
+
+        {/* --- POST AN ANSWER SECTION (remains the same) --- */}
+        {isLoggedIn ? (
+            <AnswerForm questionId={id} onAnswerPosted={fetchQuestionDetails} />
+        ) : (
+            <p style={{ marginTop: '20px' }}>Please log in to post an answer.</p>
+        )}
+
     </div>
   );
 };

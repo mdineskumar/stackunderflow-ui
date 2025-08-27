@@ -1,0 +1,41 @@
+/* src/components/Vote.css */
+
+.vote-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px; /* Space between buttons and count */
+    margin-right: 20px; /* Space between vote component and post body */
+}
+
+.vote-button {
+    background-color: transparent;
+    border: 1px solid #babfc4;
+    border-radius: 50%; /* Makes it circular */
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.vote-button:hover {
+    background-color: #e3e6e8;
+}
+
+.vote-button.voted {
+    background-color: #f48024; /* Stack Overflow's orange */
+    border-color: #f48024;
+}
+
+.vote-button.voted svg {
+    fill: #ffffff;
+}
+
+.vote-count {
+    font-size: 20px;
+    font-weight: 600;
+    color: #242729;
+}

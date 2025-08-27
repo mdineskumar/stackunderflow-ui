@@ -34,5 +34,28 @@ api.interceptors.request.use(
 // =======================================================
 
 
+// ======================================================== //
+// ==                  NEW VOTE FUNCTIONS                == //
+// ======================================================== //
+
+/**
+ * Sends a vote for a specific question.
+ * @param {number} questionId The ID of the question to vote on.
+ * @param {string} voteType Can be 'UPVOTE' or 'DOWNVOTE'.
+ * @returns {Promise} The axios promise for the request.
+ */
+export const voteOnQuestion = (questionId, voteType) => {
+    return api.post(`/questions/${questionId}/vote`, { voteType });
+};
+
+/**
+ * Sends a vote for a specific answer.
+ * @param {number} answerId The ID of the answer to vote on.
+ * @param {string} voteType Can be 'UPVOTE' or 'DOWNVOTE'.
+ * @returns {Promise} The axios promise for the request.
+ */
+export const voteOnAnswer = (answerId, voteType) => {
+    return api.post(`/answers/${answerId}/vote`, { voteType });
+};
 
 export default api;
