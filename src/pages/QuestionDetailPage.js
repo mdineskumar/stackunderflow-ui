@@ -36,6 +36,16 @@ const QuestionDetailPage = () => {
     fetchQuestionDetails();
   }, [id]); // Re-run the effect if the ID in the URL changes
 
+  const handleVoteUpdate = (newVoteCount, postId, postType) => {
+    if ( postType == 'question') {
+      setQuestion(prevQuestion => ({...prevQuestion, voteCount: newVoteCount}));
+    }else{// it is an answer
+      setQuestion(prevQuestion => ({
+        ...prevQuestion, 
+        answers: prevQuestion.answers.map(answer => answer.id === postId ? {...answer, voteCount: newVoteCount} : answer)}));
+    }
+  };
+
   // Render loading or error states
   if (loading) {
     return <div>Loading question details...</div>;
@@ -58,7 +68,7 @@ if (!question) return <div>Question not found.</div>;
 
         {/* This new flex container aligns the vote component with the question body */}
         <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-            <Vote post={question} postType="question" onVoteSuccess={fetchQuestionDetails} />
+            <Vote post={question} postType="question" onVoteSuccess={(newVoteCount) => handleVoteUpdate(newVoteCount, question.id, 'question')} />
             <div className="question-detail-body" style={{ flex: 1 }}>
                 {question.body}
             </div>
@@ -72,7 +82,7 @@ if (!question) return <div>Question not found.</div>;
                 // We apply the same pattern to each answer
                 <div key={answer.id} style={{ borderTop: '1px solid #d6d9dc', paddingTop: '16px', marginTop: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                        <Vote post={answer} postType="answer" onVoteSuccess={fetchQuestionDetails} />
+                        <Vote post={answer} postType="answer" onVoteSuccess={(newVoteCount) => handleVoteUpdate(newVoteCount,answer.id,'answer')} />
                         <div className="question-detail-body" style={{ flex: 1 }}>
                             {answer.body}
                         </div>

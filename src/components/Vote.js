@@ -34,13 +34,13 @@ const Vote = ({ post, postType, onVoteSuccess }) => {
 
         try {
             // 1. Make the API call to cast the vote.
-            await voteApi(post.id, voteType);
-            
+            const response = await voteApi(post.id, voteType);
+            const newVoteCount = response.data.newVoteCount;
             // 2. If successful, update the local button highlight state.
             setUserVote(prevVote => (prevVote === voteType ? null : voteType));
 
             // 3. Call the callback function passed from the parent to trigger a data re-fetch.
-            onVoteSuccess();
+            onVoteSuccess(newVoteCount);
 
         } catch (err) {
             console.error('Failed to vote:', err);
