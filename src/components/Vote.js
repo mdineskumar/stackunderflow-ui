@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { voteOnQuestion, voteOnAnswer } from "../services/api";
 import "./Vote.css"; // Import our new CSS
 import { useAuth } from "../context/AuthContext";
-
+import api from "../services/api";
 // Simple SVG components for the arrows
 const UpArrow = () => (
   <svg width="24" height="24" viewBox="0 0 24 24">
@@ -22,6 +22,41 @@ const Vote = ({ post, postType, onVoteSuccess }) => {
   // 'userVote' can be 'UPVOTE', 'DOWNVOTE', or null
   const [userVote, setUserVote] = useState(null); // NOTE: For a complete solution, you'd need the API to tell you the user's current vote on load. We are simplifying for now.
   const [error, setError] = useState("");
+
+  // NEW: useEffect to fetch the user's current vote status on component mount
+    useEffect(() => {
+        // Only fetch if the user is logged in
+        if (!isLoggedIn) {
+            return;
+        }
+
+        const fetchUserVote = async () => {
+            try {
+                // Determine the correct endpoint based on postType
+                const endpoint = postType === 'question' 
+                    ? `/questions/${post.id}/vote` 
+                    : `/answers/${post.id}/vote`;
+                
+                const response = await api.get(endpoint);
+
+                // The backend returns the vote object or null
+                if (response.data) {
+                    // Set the initial state based on the fetched vote type
+                    setUserVote(response.data.voteType);
+                } else {
+                    setUserVote(null); // Explicitly set to null if no vote found
+                }
+            } catch (err) {
+                // Don't show an error to the user, just log it.
+                // It's not critical if this silent fetch fails.
+                console.error("Failed to fetch user's vote status:", err);
+            }
+        };
+
+        fetchUserVote();
+        
+    // Dependencies: re-run this effect if the post ID or login status changes
+    }, [post.id, postType, isLoggedIn]);
 
   const handleVote = async (voteType) => {
         if (!isLoggedIn) {
